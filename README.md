@@ -37,6 +37,14 @@ acessa o host por `host.docker.internal`; no Linux, o alias é criado por `host-
 `OLLAMA_HOST=0.0.0.0:11434` e reinicie-o**, limitando o acesso de rede ao ambiente da
 aula. Outra opção é definir `OLLAMA_BASE_URL` com um endpoint acessível ao container.
 
+O PostgreSQL fica na rede interna `database` do projeto, sem publicar a porta 5432
+no host. A aplicação acessa o banco por `postgres:5432` e mantém acesso ao Ollama e
+a endpoints externos pela rede padrão. Para abrir o cliente SQL no container:
+
+```sh
+docker compose exec postgres sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+```
+
 Coloque materiais próprios `.txt` ou `.md` em UTF-8 em `data/documents/` e execute:
 
 ```sh
